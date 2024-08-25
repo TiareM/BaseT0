@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,6 +6,18 @@
 #include <signal.h> 
 #include <sys/types.h>
 #include "../input_manager/manager.h"
+
+// syscalls vistas en clase, como kill, exec, fork, y wait/waitpid
+
+struct Process {
+    pid_t pid;
+    char name[64];
+    time_t start_time;
+    int exit_code;
+};
+
+// array procesos con maximo 16 procesos
+struct Process procesos[16];
 
 bool string_equals(char *string1, char *string2) {
   return !strcmp(string1, string2);
@@ -89,4 +100,3 @@ int main(int argc, char const *argv[])
   } while (status);
   
 }
-
