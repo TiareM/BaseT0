@@ -44,7 +44,6 @@ bool string_equals(char *string1, char *string2) {
 /* Funcion que se ejecuta al recibir la señal*/
 void sigintHandler(int sig_num) 
 { 
-  printf("SENAL RECIBIDA %i\n", sig_num);
   terminate_children();
   exit(0);
 } 
