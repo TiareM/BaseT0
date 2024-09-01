@@ -24,6 +24,19 @@ struct Process {
 // array procesos con maximo 16 procesos
 struct Process procesos[16];
 
+void terminate_children() {
+    for (int i = 0; i < indice_procesos; i++) {
+      kill(procesos[i].pid, SIGINT);  // Enviar SIGINT a cada hijo
+    }
+
+    sleep(10);
+
+    // Esperar a que todos los hijos terminen
+    for (int i = 0; i < indice_procesos; i++) {
+      kill(procesos[i].pid, SIGKILL);
+    }
+}
+
 bool string_equals(char *string1, char *string2) {
   return !strcmp(string1, string2);
 }
@@ -31,8 +44,8 @@ bool string_equals(char *string1, char *string2) {
 /* Funcion que se ejecuta al recibir la señal*/
 void sigintHandler(int sig_num) 
 { 
-    printf("SENAL RECIBIDA %i\n", sig_num);
-    exit(0);
+  printf("SENAL RECIBIDA %i\n", sig_num);
+  exit(0);
 } 
 
 int main(int argc, char const *argv[])
@@ -206,6 +219,7 @@ int main(int argc, char const *argv[])
     }
 
     else if (string_equals(input[0], "lrexit")) {
+      terminate_children();
       free_user_input(input);
       exit(0);
     }    
